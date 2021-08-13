@@ -12,10 +12,30 @@ import { Product } from '../product.interface';
 export class ProductListComponent implements OnInit {
 
   title = 'Products';
-  products: Product[];
+  //products: Product[];
   products$: Observable<Product[]>;
   selectedProduct: Product;
   errorMessage: string;
+
+  // Pagination
+  pageSize = 5;
+  start = 0;
+  end = this.pageSize;
+  currentPage = 1;
+
+  previousPage() {
+    this.start -= this.pageSize;
+    this.end -= this.pageSize;
+    this.selectedProduct = null;
+    this.currentPage--;
+  }
+
+  nextPage() {
+    this.start += this.pageSize;
+    this.end += this.pageSize;
+    this.selectedProduct = null;
+    this.currentPage++;
+  }
 
   onSelect(product: Product) {
     this.selectedProduct = product;
