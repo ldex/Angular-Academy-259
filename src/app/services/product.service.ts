@@ -16,10 +16,16 @@ export class ProductService {
     this.initProducts();
   }
 
+  insertProduct(newProduct: Product): Observable<Product> {
+    return this.http.post<Product>(this.baseUrl, newProduct);
+  }
+
   initProducts() {
+    let url:string = this.baseUrl + `?$orderby=ModifiedDate%20desc`;
+
     this.products$ = this
                         .http
-                        .get<Product[]>(this.baseUrl)
+                        .get<Product[]>(url)
                         .pipe(
                           delay(1500), // Fake delay!!!
                           tap(console.table),
